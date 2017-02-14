@@ -1,0 +1,151 @@
+#####################
+#  BASIC COMMANDS   #
+#####################
+
+MOVING AROUND AND MANAGING FILES
+up/down arrow 			command history
+tab				auto-complete command
+ls				list files
+cd {dir}			change directory
+cd "dir spaces" 		change to directory with spaces in name
+cd file\ name			alternate way to change to dir with spaces
+cd ..				go back one directory
+cd ../..			go back multiple directories
+cd /				go to root directory
+cd ~				go to home directory
+mkdir {name}			make a new directory
+rmdir {dir}			remove directory (if empty)
+rm -R				remove directory (if not empty) using recursive option
+rm {file}			remove file
+{editor} {file}			open file in editor like nano or vim
+cat {file}			concatenate file (show contents, a.k.a., read it)
+cmd1 && cmd2			&& = and then;  issue multiple commands back to back
+| (pipe)			allows commands to be issued simultaneously
+
+PAGER
+cat {file} | less		shows text one page at a time; use pg up/down; ctrl-z exits
+
+SEARCH
+cat {file} | grep {pattern} 	read file and search for pattern
+
+MOVING AND COPYING FILES
+mv {file} {new location}	move file or directory (not a copy)
+cp {file} {new location}	copy file
+cp -R {dir} {new location}	copy directory
+rsync -avzP {dir} {new loc}	copy directory with output; options a=archive; v=verbose; z=compression ; P=progress
+
+POWER OFF
+sudo shutdown -h now "message"	turn downs and halts (-h) system either now or specified time
+sudo shutdown -r		reboot anc can specify time and message from previous command
+sudo reboot			another reboot option
+
+ROOT PRIVILEGES
+****Never login as root!!!****	root account is not authenticatable, but you can assume its privileges with sudo
+sudo {cmd}			assumes roots privileges if user is in sudoers.d file
+/etc/sudoers.d			specifies root privileges for system
+su {user}			substitue user identity; i.e., switch to that user
+exit				exits that user
+groups				shows which groups you belong to
+
+HELP
+man {command}			shows manual for command
+{command} --help		shows help, if available (can be double or single hyphen)
+
+DATE AND TIME
+date				shows date and time
+sudo date MMddhhmmyyyy.ss	change system date and time
+
+USER AND GROUP MANAGEMENT
+sudo adduser {name}		add a user
+sudo addgroup {name}		add a group that shares permissions and privileges
+groups				shows which groups current user belongs to
+cat /etc/group			shows all groups on system
+cat /etc/passwd			shows all users on system
+sudo passwd {username}		change user's password
+sudo deluser {username}		delete user
+sudo groupdel {group}		delete group
+sudo addgroup {group}		make a group
+sudo adduser {user} {group}	add user to group
+sudo deluser {user} {group}	remove user from group
+
+INSTALLING PROGRAMS AND UNDERSTANDING DEPENDENCIES
+sudo apt-get install {program}	install program when you know the name
+sudo apt-get remove {program}	deletes program
+sudo apt-cache search {type}	searches for a type of program (e.g., ftp)
+sudo apt-get update		updates indexes from different repositories system uses
+sudo apt-get upgrade		upgrades system
+sudo vim /etc/apt/sources.list	shows all repositories system is configured to utilize
+sudo do-release upgrade		keep operating system up-to-date
+
+NETWORKING
+ifconfig			interface configuration; shows IP and MAC address
+ping {url}			ping the server
+sudo vim /etc/hostname		file that contains the hostname;  user@hostname
+sudo vim /etc/network/interfaces	configure system networs
+sudo ifdown {interface}		bring interface down (e.g., wlan0 or eth0)
+sudo ifup {interface}		bring interface up 
+
+PERMISSIONS
+rwx = 7
+rw- = 6
+r-x = 5
+r-- = 4
+
+777 = rwxrwxrwx
+770 = rwxrwx---
+755 = rwxr-xr-x
+666 = rw-rw-rw-
+644 = rw-r--r--
+600 = rw-------
+
+READ = View the file/directory
+WRITE = Change/modify the file/directory
+EXECUTE = Run code or enter directory
+
+EXAMPLE
+file(-)/directory(d) permissions(owner/group/others) user group
+-rw------- 1 cody cody 364 Mar 10 16:34 nano.save
+drwxrwxr-x 4 cody cody 4096 Mar 12 22:53 new
+
+chmod 777 {file}		change file permissions
+sudo chown {user} {file}	change owner
+sudo chgrp {group} {file}	change group
+
+MANAGING FILE SYSTEMS
+File systems can be mounted or unmounted (not accessible)
+fdisk				partioning program
+sudo fdisk -l			list file system
+dev/sd# 			hard drive; # = partition
+sudo fdisk /dev/sd##		opens fdisk on that drive and partition; choose a command and then write it to disk
+
+another program is 'parted' 	(must use for hard disks > 2 TB)
+sudo parted			opens program 
+print all			shows file system
+select /dev/###			selects a disk to work on
+quit				exit parted
+
+sudo mkfs.@@@ /dev/###		make file system of type @@@ (e.g., ext3) on drive /dev/###
+
+df -h				disk space usage of file system -human readable
+ 
+MOUNT DRIVE
+cd /mnt				change to mount directory
+sudo mkdir  ###			make a new directory to mount to
+sudo mount -t {} /dev/# /mnt/#	mount file system partition /dev/# of type 't' at mount /mnt/#
+				***for file type FAT32 use 'vfat'
+sudo umount /dev/#		unmount drive
+
+EASIER WAY...
+sudo blkid			shows UUIDs
+				***UUID=Universal Unique IDenitfication number
+sudo vim /etc/fstab		file system table (fstab)
+add:  UUID=*** /mnt/sd# vfat defaults 0 2
+sudo mount /dev/sda1
+
+PROCESS MANAGEMENT
+ctrl-z				suspends program in background (like minimizing in Windows)
+ps				shows processes in a static output
+fg {program}			brings program back into foreground
+top				shows processes dynamically (like Windows task manager)
+sudo kill -9 PID#		kill all (-9) processes with this process ID # (get info from 'ps' or 'top' command)
+hey I made a change
