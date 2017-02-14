@@ -9,5 +9,11 @@ commands=[
 ['cd ~', 'goes to the home directory'],
 ['mkdir', 'makes a new directory'],
 ['rmdir', 'removes a directory if EMPTY'],
-['rm -r', 'removes a directory if NOT EMPTY']
+['rm -r', 'removes a directory if NOT EMPTY'],
+['rm', 'removes a file'],
+['cat', 'concatenates file contents'],
+['&&', 'issues multiples commands back to back'],
+['|', 'allows commands to be issued simultaneously'],
+['less', 'pager that allows you to scroll up and down'],
+['grep', 'search for a pattern']
 ]
